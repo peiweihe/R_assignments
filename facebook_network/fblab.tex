@@ -1,0 +1,483 @@
+\documentclass[]{article}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Facebook Lab},
+            pdfauthor={Paine (HE Peiwei, 54471952)},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{{#1}}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{{#1}}}
+\newcommand{\ImportTok}[1]{{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{{#1}}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{{#1}}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{{#1}}}}
+\newcommand{\BuiltInTok}[1]{{#1}}
+\newcommand{\ExtensionTok}[1]{{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{{#1}}}
+\newcommand{\RegionMarkerTok}[1]{{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{{#1}}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{{#1}}}}
+\newcommand{\NormalTok}[1]{{#1}}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+%%% Change title format to be more compact
+\usepackage{titling}
+
+% Create subtitle command for use in maketitle
+\newcommand{\subtitle}[1]{
+  \posttitle{
+    \begin{center}\large#1\end{center}
+    }
+}
+
+\setlength{\droptitle}{-2em}
+  \title{Facebook Lab}
+  \pretitle{\vspace{\droptitle}\centering\huge}
+  \posttitle{\par}
+  \author{Paine (HE Peiwei, 54471952)}
+  \preauthor{\centering\large\emph}
+  \postauthor{\par}
+  \date{}
+  \predate{}\postdate{}
+
+
+\begin{document}
+\maketitle
+
+\subsection{Research Question: How people react to an illegal migrant
+issue on
+FB.}\label{research-question-how-people-react-to-an-illegal-migrant-issue-on-fb.}
+
+First, authorize by using the Facebook token.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(Rfacebook)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fb_app_id =}\StringTok{ "767570183395387"}
+\NormalTok{fb_app_secret =}\StringTok{ "539a32d8923e44edfd3c7aa750dc14d6"}
+\NormalTok{token =}\StringTok{ }\KeywordTok{fbOAuth}\NormalTok{(fb_app_id, fb_app_secret)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{token =}\StringTok{ }\KeywordTok{readRDS}\NormalTok{(}\StringTok{"token.rds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Second, get 20 posts on the page of CNN.And create a subset of the posts
+dataframe, including the ids, time, likes, messages, and the numbers of
+likes, comments and shares. By checking the id number to select the post
+I want.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{posts =}\StringTok{ }\KeywordTok{getPage}\NormalTok{(}\StringTok{"cnn"}\NormalTok{, token, }\DataTypeTok{n=}\DecValTok{20}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 20 posts
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{posts =}\StringTok{ }\KeywordTok{subset}\NormalTok{(posts, }\DataTypeTok{select=}\KeywordTok{c}\NormalTok{(}\StringTok{"id"}\NormalTok{, }\StringTok{"created_time"}\NormalTok{, }\StringTok{"likes_count"}\NormalTok{, }\StringTok{"comments_count"}\NormalTok{, }\StringTok{"shares_count"}\NormalTok{, }\StringTok{"message"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+Third, the post I choose is about illegally crossing the border into
+Canada. To get this post, just check the post id, which is {[}6{]} in
+the dataframe. After I get this post, I collect the reactions and
+comments data, and create dataframes seperately. Present the reactions
+on this post by pie chart, using plotly.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{post =}\StringTok{ }\KeywordTok{getPost}\NormalTok{(posts$id[}\DecValTok{7}\NormalTok{], token, }\DataTypeTok{reactions =} \NormalTok{T, }\DataTypeTok{comments=}\NormalTok{F)}
+\NormalTok{reactions =}\StringTok{ }\NormalTok{post$reactions}
+\NormalTok{r_counts=}\KeywordTok{table}\NormalTok{(reactions$from_type)}
+
+\NormalTok{post =}\StringTok{ }\KeywordTok{getPost}\NormalTok{(posts$id[}\DecValTok{7}\NormalTok{], token, }\DataTypeTok{comments =} \NormalTok{T, }\DataTypeTok{likes =} \NormalTok{F)}
+\NormalTok{comments =}\StringTok{ }\NormalTok{post$comments}
+\KeywordTok{save}\NormalTok{(comments, }\DataTypeTok{file=}\StringTok{"fbcomments.rda"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(plotly)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: ggplot2
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'plotly'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:ggplot2':
+## 
+##     last_plot
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:httr':
+## 
+##     config
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     filter
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:graphics':
+## 
+##     layout
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{58}\NormalTok{, }\DecValTok{305}\NormalTok{, }\DecValTok{4}\NormalTok{,}\DecValTok{111}\NormalTok{,}\DecValTok{21}\NormalTok{,}\DecValTok{1537}\NormalTok{)}
+\NormalTok{labels =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"ANGRY"}\NormalTok{, }\StringTok{"HAHA"}\NormalTok{, }\StringTok{"LIKE"}\NormalTok{, }\StringTok{"LOVE"}\NormalTok{,}\StringTok{"SAD"}\NormalTok{,}\StringTok{"WOW"}\NormalTok{,}\StringTok{"THUMBSUP"}\NormalTok{)}
+\NormalTok{piepercent =}\StringTok{ }\KeywordTok{round}\NormalTok{(}\DecValTok{100}\NormalTok{*x/}\KeywordTok{sum}\NormalTok{(x), }\DecValTok{1}\NormalTok{)}
+\KeywordTok{pie}\NormalTok{(x, }\DataTypeTok{labels =} \NormalTok{piepercent, }\DataTypeTok{main =} \StringTok{"Reactions"}\NormalTok{,}\DataTypeTok{col =} \KeywordTok{rainbow}\NormalTok{(}\KeywordTok{length}\NormalTok{(x)))}
+\KeywordTok{legend}\NormalTok{(}\StringTok{"topright"}\NormalTok{,}\KeywordTok{c}\NormalTok{(}\StringTok{"ANGRY"}\NormalTok{, }\StringTok{"HAHA"}\NormalTok{, }\StringTok{"LIKE"}\NormalTok{, }\StringTok{"LOVE"}\NormalTok{,}\StringTok{"SAD"}\NormalTok{,}\StringTok{"WOW"}\NormalTok{,}\StringTok{"THUMBSUP"}\NormalTok{), }\DataTypeTok{cex =} \FloatTok{0.8}\NormalTok{,}
+   \DataTypeTok{fill =} \KeywordTok{rainbow}\NormalTok{(}\KeywordTok{length}\NormalTok{(x)))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{fblab_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+Fifth, create a wordcloud of all the comments on this event. As the
+cloud shows, it mainly concerns about Canadian people.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(quanteda)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## quanteda version 0.9.9.3
+\end{verbatim}
+
+\begin{verbatim}
+## 
+## Attaching package: 'quanteda'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:utils':
+## 
+##     View
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:base':
+## 
+##     sample
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{u_corpus =}\StringTok{ }\KeywordTok{corpus}\NormalTok{(comments$message)}
+\NormalTok{u_dfm =}\StringTok{ }\KeywordTok{dfm}\NormalTok{(u_corpus)}
+\NormalTok{u_dfm}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Document-feature matrix of: 76 documents, 617 features (97.5% sparse).
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(RColorBrewer)}
+\NormalTok{stopwords =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\KeywordTok{stopwords}\NormalTok{(}\StringTok{"english"}\NormalTok{), }\StringTok{'a'}\NormalTok{,}\StringTok{'"'}\NormalTok{, }\StringTok{','}\NormalTok{,}\StringTok{'&'}\NormalTok{,}\StringTok{'the'}\NormalTok{,}\StringTok{"?"}\NormalTok{,}\StringTok{"-"}\NormalTok{,}\StringTok{"["}\NormalTok{,}\StringTok{"]"}\NormalTok{,}\StringTok{"("}\NormalTok{,}\StringTok{")"}\NormalTok{,}\StringTok{"cnn"}\NormalTok{,}\StringTok{"https"}\NormalTok{, }\StringTok{"rt"}\NormalTok{, }\StringTok{"news"}\NormalTok{,}\StringTok{"who"}\NormalTok{,}\StringTok{"you"}\NormalTok{,}\StringTok{"this"}\NormalTok{,}\StringTok{"too"}\NormalTok{,}\StringTok{"for"}\NormalTok{,}\StringTok{"in"}\NormalTok{,}\StringTok{"by"}\NormalTok{,}\StringTok{"http"}\NormalTok{,}\StringTok{"will"}\NormalTok{,}\StringTok{"and"}\NormalTok{,}\StringTok{"has"}\NormalTok{,}\StringTok{"to"}\NormalTok{,}\StringTok{"don't"}\NormalTok{,}\StringTok{"/"}\NormalTok{,}\StringTok{":"}\NormalTok{,}\StringTok{"."}\NormalTok{,}\StringTok{"bye"}\NormalTok{,}\StringTok{"!"}\NormalTok{,}\StringTok{"let"}\NormalTok{,}\StringTok{","}\NormalTok{,}\StringTok{'"'}\NormalTok{,}\StringTok{"="}\NormalTok{)}
+\NormalTok{u_dfm =}\StringTok{ }\KeywordTok{dfm_select}\NormalTok{(u_dfm, stopwords,}\DataTypeTok{selection=}\KeywordTok{c}\NormalTok{(}\StringTok{"remove"}\NormalTok{),}\DataTypeTok{valuetype=}\KeywordTok{c}\NormalTok{(}\StringTok{"fixed"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## removed 106 features, from 196 supplied (fixed) feature types
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{textplot_wordcloud}\NormalTok{(u_dfm, }\DataTypeTok{max.words =} \DecValTok{50}\NormalTok{, }\DataTypeTok{colors =} \KeywordTok{brewer.pal}\NormalTok{(}\DecValTok{9}\NormalTok{, }\StringTok{"Blues"}\NormalTok{)[}\DecValTok{5}\NormalTok{:}\DecValTok{9}\NormalTok{], }\DataTypeTok{scale =} \KeywordTok{c}\NormalTok{(}\DecValTok{9}\NormalTok{, .}\DecValTok{2}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): 'mbcsToSbcs'里转换'锟
+## <U+FFFD>'出错：<ef>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): 'mbcsToSbcs'里转换'锟
+## <U+FFFD>'出错：<bf>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): 'mbcsToSbcs'里转换'锟
+## <U+FFFD>'出错：<bd>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : 'mbcsToSbcs'里转换'锟<U+FFFD>'出错：<ef>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : 'mbcsToSbcs'里转换'锟<U+FFFD>'出错：<bf>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : 'mbcsToSbcs'里转换'锟<U+FFFD>'出错：<bd>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : Unicode字符U+fffd不带字体度量
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): 'mbcsToSbcs'里转换'猸
+## <U+FFFD>'出错：<e2>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): 'mbcsToSbcs'里转换'猸
+## <U+FFFD>'出错：<ad>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in strwidth(words[i], cex = size[i], ...): 'mbcsToSbcs'里转换'猸
+## <U+FFFD>'出错：<95>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : 'mbcsToSbcs'里转换'猸<U+FFFD>'出错：<e2>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : 'mbcsToSbcs'里转换'猸<U+FFFD>'出错：<ad>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : 'mbcsToSbcs'里转换'猸<U+FFFD>'出错：<95>代替了dot
+\end{verbatim}
+
+\begin{verbatim}
+## Warning in text.default(x1, y1, words[i], cex = size[i], offset = 0, srt =
+## rotWord * : Unicode字符U+2b55不带字体度量
+\end{verbatim}
+
+\includegraphics{fblab_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+Sixth, get the replies to the comments, so as to construct a connection
+between the users. And get the second layer of the connection, by
+catching people who reply to the comments.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{post =}\StringTok{ }\KeywordTok{getPost}\NormalTok{(}\StringTok{"5550296508_10156108813016509"}\NormalTok{, token, }\DataTypeTok{likes=}\NormalTok{F)}
+\NormalTok{comments =}\StringTok{ }\NormalTok{post$comments}
+\NormalTok{replies =}\StringTok{ }\KeywordTok{list}\NormalTok{()}
+\NormalTok{for (comment in comments$id[comments$comments_count >}\StringTok{ }\DecValTok{0}\NormalTok{]) \{}
+\NormalTok{creplies =}\StringTok{ }\KeywordTok{getCommentReplies}\NormalTok{(comment, token)$replies}
+\NormalTok{if (}\KeywordTok{nrow}\NormalTok{(creplies) >}\StringTok{ }\DecValTok{0}\NormalTok{) \{}
+\NormalTok{creplies$comment_id =}\StringTok{ }\NormalTok{comment}
+\NormalTok{replies =}\StringTok{ }\KeywordTok{c}\NormalTok{(replies, }\KeywordTok{list}\NormalTok{(creplies))}
+\NormalTok{\}}
+\NormalTok{\}}
+\NormalTok{replies =}\StringTok{ }\NormalTok{plyr::}\KeywordTok{rbind.fill}\NormalTok{(replies)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{replies2 =}\StringTok{ }\NormalTok{replies[}\KeywordTok{c}\NormalTok{(}\StringTok{"from_name"}\NormalTok{, }\StringTok{"comment_id"}\NormalTok{)]}
+\NormalTok{comments2 =}\StringTok{ }\NormalTok{comments[}\KeywordTok{c}\NormalTok{(}\StringTok{"id"}\NormalTok{, }\StringTok{"from_name"}\NormalTok{)]}
+\KeywordTok{colnames}\NormalTok{(comments2) =}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"comment_id"}\NormalTok{, }\StringTok{"to_name"}\NormalTok{)}
+\NormalTok{replies2 =}\StringTok{ }\KeywordTok{merge}\NormalTok{(replies2, comments2)}
+\NormalTok{replies2 =}\StringTok{ }\KeywordTok{aggregate}\NormalTok{(replies2$comment_id, replies2[}\KeywordTok{c}\NormalTok{(}\StringTok{"from_name"}\NormalTok{, }\StringTok{"to_name"}\NormalTok{)], length)}
+\NormalTok{replies2 =}\StringTok{ }\KeywordTok{subset}\NormalTok{(replies2, from_name !=}\StringTok{ }\NormalTok{to_name)}
+\end{Highlighting}
+\end{Shaded}
+
+Finally, draw a graph according to the connections.But the nodes on the
+graph are too crowded, so I only keep the people with over 2 comments on
+the connection graph. There are 5 main colors on the graph, which mean
+there are 5 main debates among the comments under this post.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(igraph)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'igraph'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:quanteda':
+## 
+##     similarity
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:plotly':
+## 
+##     %>%, groups
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     decompose, spectrum
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:base':
+## 
+##     union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{g =}\StringTok{ }\KeywordTok{graph_from_data_frame}\NormalTok{(replies2, }\DataTypeTok{directed=}\NormalTok{F)}
+\KeywordTok{E}\NormalTok{(g)$weight =}\StringTok{ }\KeywordTok{E}\NormalTok{(g)$x}
+\KeywordTok{V}\NormalTok{(g)$size =}\StringTok{ }\FloatTok{0.5} \NormalTok{+}\StringTok{ }\NormalTok{(.}\DecValTok{5} \NormalTok{*}\StringTok{ }\KeywordTok{degree}\NormalTok{(g))}
+\NormalTok{clusters =}\StringTok{ }\KeywordTok{edge.betweenness.community}\NormalTok{(g)$membership}
+\NormalTok{pal =}\StringTok{ }\KeywordTok{substr}\NormalTok{(}\KeywordTok{rainbow}\NormalTok{(}\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(clusters)), }\DataTypeTok{start=}\FloatTok{0.33}\NormalTok{, }\DataTypeTok{end=}\DecValTok{1}\NormalTok{, }\DataTypeTok{v=}\FloatTok{0.4}\NormalTok{), }\DecValTok{1}\NormalTok{, }\DecValTok{7}\NormalTok{)}
+\KeywordTok{V}\NormalTok{(g)$color =}\StringTok{ }\NormalTok{pal[}\KeywordTok{match}\NormalTok{(clusters, }\KeywordTok{unique}\NormalTok{(clusters))]}
+\KeywordTok{plot}\NormalTok{(g, }\DataTypeTok{vertex.label=}\OtherTok{NA}\NormalTok{,}\DataTypeTok{edge.arrow.size=}\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{fblab_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Keep only people with >2 reply in largest component}
+\NormalTok{g2 =}\StringTok{ }\NormalTok{igraph::}\KeywordTok{decompose}\NormalTok{(g, }\DataTypeTok{min.vertices =} \DecValTok{50}\NormalTok{)[[}\DecValTok{1}\NormalTok{]]}
+\NormalTok{g2 =}\KeywordTok{induced_subgraph}\NormalTok{(g2, }\KeywordTok{degree}\NormalTok{(g2, }\KeywordTok{V}\NormalTok{(g2), }\StringTok{"in"}\NormalTok{)>}\DecValTok{2}\NormalTok{)}
+\CommentTok{# Label size based on betweenness centrality}
+\NormalTok{centrality =}\StringTok{ }\KeywordTok{betweenness}\NormalTok{(g2)}
+\KeywordTok{V}\NormalTok{(g2)$label.cex =}\StringTok{ }\FloatTok{0.5} \NormalTok{+}\StringTok{ }\FloatTok{0.5} \NormalTok{*}\StringTok{ }\NormalTok{centrality /}\StringTok{ }\KeywordTok{max}\NormalTok{(centrality)}
+\CommentTok{# color labels based on clustering}
+\NormalTok{clusters =}\StringTok{ }\KeywordTok{edge.betweenness.community}\NormalTok{(g2)$membership}
+\NormalTok{pal =}\StringTok{ }\KeywordTok{substr}\NormalTok{(}\KeywordTok{rainbow}\NormalTok{(}\KeywordTok{length}\NormalTok{(}\KeywordTok{unique}\NormalTok{(clusters)), }\DataTypeTok{start=}\FloatTok{0.33}\NormalTok{, }\DataTypeTok{end=}\DecValTok{1}\NormalTok{, }\DataTypeTok{v=}\FloatTok{0.5}\NormalTok{), }\DecValTok{1}\NormalTok{, }\DecValTok{7}\NormalTok{)}
+\KeywordTok{V}\NormalTok{(g2)$label.color =}\StringTok{ }\NormalTok{pal[}\KeywordTok{match}\NormalTok{(clusters, }\KeywordTok{unique}\NormalTok{(clusters))]}
+\NormalTok{layout =}\StringTok{ }\KeywordTok{layout.reingold.tilford}\NormalTok{(g2, }\DataTypeTok{circular=}\NormalTok{T)}
+\KeywordTok{plot}\NormalTok{(g2, }\DataTypeTok{vertex.shape =} \StringTok{"none"}\NormalTok{, }\DataTypeTok{layout=}\NormalTok{layout, }\DataTypeTok{edge.arrow.size=}\DecValTok{4}\NormalTok{, }\DataTypeTok{edge.curved=}\OtherTok{TRUE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{fblab_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+
+\end{document}

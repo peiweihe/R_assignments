@@ -1,0 +1,92 @@
+---
+title: "Scrap Discuss HK"
+author: "Paine (HE Peiwei, 54471952)"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+First, read the URL by using rvest, and the encoding is GBK. "Utf-8" is for OS system, but for Windows, the text should be encode in GBK.
+```{r, eval=FALSE}
+library(httr)
+library(rvest)
+url = "http://www.discuss.com.hk/viewthread.php?tid=26488701"
+r = GET(url)
+text = iconv(list(r$content), from="big5", to="GBK", sub="")
+page = read_html(text)
+```
+
+Second, get comments to this post by using the html node, and check the css. 
+```{r, eval=FALSE}
+posts = page %>% html_nodes(".viewthread")
+
+contents = posts %>% 
+  html_node("span[id*='postorig']") %>% 
+  html_text %>% trimws
+```
+Third, save the content's text to txt file.
+```{r, eval=FALSE}
+write.table(contents, file = "disshk.txt", sep = ",", col.names = colnames(alltext))
+```
+
+Fourth, get segment the Chinese text and calculate the frequency. And convert the frequency into dataframe.
+```{r}
+library(rJava)
+library(Rwordseg)
+library(wordcloud2)
+text=segmentCN("disshk.txt",returnType = "tm")
+text1=readLines("disshk.segment.txt", encoding = "UTF-8")
+word = lapply(X = text1, FUN = strsplit, "\\s")
+word1=unlist(word)
+df=table(word1)
+df=sort(df, decreasing = T)
+
+d=data.frame(df)
+newd = head(d, n=100)
+newd<-newd[-1,]
+head(newd)
+```
+
+Finally, output a wordcloud.
+```{r}
+library(wordcloud2)
+wordcloud2(newd, color = "random-light", backgroundColor = "white")
+```
+
+```{r,echo=FALSE, eval=FALSE}
+results = list()
+while (TRUE) {
+  url = "http://www.discuss.com.hk/viewthread.php?tid=26488701"
+  r = GET(url)
+  text = iconv(list(r$content), from="big5", to="GBK", sub="")
+  page = read_html(text)
+  posts = page %>% html_nodes(".viewthread")
+  contents = posts %>% 
+    html_node("span[id*='postorig']") %>% 
+    html_text %>% trimws
+  results[[url]] = contents
+  # get next
+  url = page %>% 
+    html_node(".pages .next") %>% 
+    html_attr("href")
+  if (is.na(url)) break
+  url = paste0("http://news.discuss.com.hk/", url, encoding="GBK")
+}
+# combine results
+unlist(results, use.names = F)
+```
+
+
+```{r, echo=FALSE, eval=FALSE}
+posts = page %>% html_nodes(".viewthread")
+
+authors = posts %>% 
+  html_nodes(".postauthor cite") %>% 
+  html_text %>% trimws
+
+posts
+```
+

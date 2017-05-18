@@ -1,0 +1,54 @@
+---
+title: "Wiki Table Resubmit"
+author: "Paine (HE Peiwei, 54471952)"
+date: "2017.2.10"
+output: pdf_document
+---
+## Research Topic: Wiki Table Scraping
+
+First, I scrap the wiki page of The Fast and the Furious, and get a table of the detailed info of the serie films.
+```{r}
+library(rvest)
+url = "https://en.wikipedia.org/wiki/The_Fast_and_the_Furious"
+film = read_html(url)
+```
+
+```{r}
+table=film%>%html_node("table.wikitable")%>%html_table(header = NA, trim = TRUE, fill=TRUE)
+```
+
+Then, I extra links of all the films.
+```{r}
+links = film%>%html_node("table.wikitable")%>% html_nodes("a") %>% html_attr("href")
+links = paste("https://en.wikipedia.org", links, sep = "")
+table$link = links
+```
+
+Then, I create 2 functions to get the Starring and Director of each film, according to the details in the infomation boxes.
+```{r}
+get_Starring = function(page) {
+  details = page %>% html_node("table.infobox") %>% html_table
+  colnames(details) <- c("name", "value")
+  details$value[details$name == "Starring"]
+}
+
+get_Director = function(page) {
+  details = page %>% html_node("table.infobox") %>% html_table
+  colnames(details) <- c("name", "value")
+  details$value[details$name == "Directed by"]
+}
+```
+
+Finally, I apply the funtions and add 2 new columns to the table.
+```{r}
+table$Starring = ""
+table$Director = ""
+for (i in seq_along(links)) {
+  message(i)
+  page = read_html(links[i])
+  table$Starring[i] = get_Starring(page)
+  table$Director[i] = get_Director(page)
+}
+
+table
+```

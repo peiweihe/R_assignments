@@ -1,0 +1,117 @@
+---
+title: "Weibo Scraping"
+author: "Paine (HE Peiwei, 54471952)"
+output:
+  html_document: default
+  pdf_document:
+    latex_engine: xelatex
+---
+## Research Topic: Scraping Weibo contents
+First, require for all the packages.
+```{r}
+library(plyr)
+library(httr)
+library(jiebaR)
+library(rJava)
+library(Rwordseg)
+```
+
+Second, set up for the Weibo API.
+```{r,warning=FALSE,echo=FALSE}
+endpoint = oauth_endpoint(
+  authorize = 'https://api.weibo.com/oauth2/authorize', 
+  access = 'https://api.weibo.com/oauth2/access_token') 
+APP_KEY = "3756418011"
+APP_SECRET = "a754ecf89b984b6196d8983a45291ecb"
+app = oauth_app(endpoint, key = APP_KEY, secret = APP_SECRET)
+```
+```{r, message=FALSE,warning=FALSE,echo=FALSE,eval=FALSE}
+redirect_uri = "http://faustlp.wixsite.com/beijinglivehouse"
+authorize_url <- modify_url(endpoint$authorize, 
+                              query = list(client_id = app$key, redirect_uri = redirect_uri, response_type = "code"))
+  code <- oauth_exchanger(authorize_url)$code
+
+  req_params <- list(client_id = app$key, redirect_uri = redirect_uri, grant_type = "authorization_code", 
+                     code = code, client_secret = app$secret)
+  req <- POST(endpoint$access, encode = "form", body = req_params)
+  
+  stop_for_status(req, task = "get an access token")
+  content(req, as="parsed", type="application/json")
+  access_token=token$access_token
+```
+```{r}
+system("defaults write org.R-project.R force.LANG en_US.UTF-8")
+```
+
+Third, create funcion to get Weibo contents by using the API.
+```{r}
+weibo_get <- function(token, path, ...) {
+  url = paste0("https://api.weibo.com/2/", path, ".json")
+  query = c(list(access_token="2.00ixXfJCRvXNGEde90cd86260UZF73"), list(...))
+  res = httr::GET(url, query=query)
+  stop_for_status(res, task = paste("Query weibo:", url))
+  content(res)
+}
+```
+
+Fourth, get the statuses of my bilateral friends, the statuses on my home timeline, and the statuses of my followings. As the API can only return 20 once, so I scrap the weibo for 3 times, and save the weibo contents as RData, there are 60 weibo contents in total.
+```{r,eval=FALSE}
+w=weibo_get(token, 'statuses/bilateral_timeline')
+weibotext = list()
+for(i in 1:20){
+  wt=w$statuses[[i]]$text
+  weibotext <- c(wt,weibotext)
+}
+
+ft=weibo_get(token, 'statuses/friends_timeline')
+fwtext = list()
+for(i in 1:20){
+  fwt=ft$statuses[[i]]$text
+  fwtext <- c(fwt,fwtext)
+}
+alltext=cbind(weibotext ,fwtext)
+save(alltext, file="scrapweibo.RData")
+```
+```{r warning = F, message = F}
+ht=weibo_get(token, 'statuses/home_timeline')
+```
+```{r}
+httext = list()
+for(i in 1:20){
+  htt=ht$statuses[[i]]$text
+  httext <- c(htt,httext)
+}
+load("scrapweibo.RData")
+alltext=cbind(alltext ,httext)
+alltext=ldply(alltext, rbind)
+colnames(alltext)[1]="text"
+```
+
+Fitht, I save the dataframe into txt file, so as to do the Chinese words segment.
+```{r}
+write.table(alltext, file = "alldf.txt", sep = ",", col.names = colnames(alltext))
+
+all2 <- read.table(file = "alldf.txt",sep = ",", header = TRUE, stringsAsFactors = FALSE) 
+```
+
+Sixth, by using the Rwordseg, there is a txt file output of the segment words. And I count the frequency of these words, and get the top 100 words to a dataframe.
+```{r}
+text=segmentCN("alldf.segment.2017-03-06_19_24_27.txt",returnType = "tm")
+text1=readLines("alldf.segment.2017-03-06_19_24_27.segment.txt ", encoding = "UTF-8")
+word = lapply(X = text1, FUN = strsplit, "\\s")
+word1=unlist(word)
+df=table(word1)
+df=sort(df, decreasing = T)
+```
+```{r}
+d=data.frame(df)
+newd = head(d, n=100)
+newd<-newd[-1,]
+head(newd)
+```
+
+Finally, create a wordcloud base on the segment.
+```{r}
+library(wordcloud2)
+wordcloud2(newd, color = "random-light", backgroundColor = "white")
+```
